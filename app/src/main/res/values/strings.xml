@@ -1,0 +1,21 @@
+<resources>
+    <string name="app_name">AudioChat</string>
+    <string name="splash_screen_textView">Welcome</string>
+    <string name="splash_screen_intro">Term Project by Ts.Temuulen 18B1NUM2654</string>
+    <string name="login_text">Login</string>
+    <string name="login_intro_text">You and your friends are always connected.</string>
+    <string name="username_text">Username</string>
+    <string name="password_text">Password</string>
+    <string name="sign_up_text">Sign up</string>
+    <string name="log_in_text">Log In</string>
+    <string name="sign_up_text_intro">Sign Up</string>
+    <string name="signup_pass_text">Password</string>
+    <string name="username_signup_text">Username</string>
+    <string name="email_signup_text">Email</string>
+    <string name="signup_register_text">Register</string>
+    <string name="signup_back_text">Back</string>
+    <string name="upload_photo_text">Upload photo</string>
+    <string name="log_out_tetx">Log out</string>
+    <string name="profile_section_text">Profile</string>
+    <string name="email_text_login">Email</string>
+</resources>

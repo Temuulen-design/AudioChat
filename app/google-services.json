@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "133582571285",
+    "firebase_url": "https://chat-is-241a6-default-rtdb.asia-southeast1.firebasedatabase.app",
+    "project_id": "chat-is-241a6",
+    "storage_bucket": "chat-is-241a6.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:133582571285:android:4f8df99d3c9d211e618b1c",
+        "android_client_info": {
+          "package_name": "com.example.audiochat"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "133582571285-bcc67otu1cl4o8ic2v6c7k4p0prlc9lj.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.audiochat",
+            "certificate_hash": "36b0a9a4cc7b4b9b54fe15aaf53894e7f846cc65"
+          }
+        },
+        {
+          "client_id": "133582571285-bma1ac5tclj2ubs50noo0o6e9da73eia.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBCcwBTBZGEMTN-LEhEl91832j1a5hJN20"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "133582571285-bma1ac5tclj2ubs50noo0o6e9da73eia.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
