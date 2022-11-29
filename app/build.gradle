@@ -47,10 +47,4 @@ dependencies {
 
     implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.1.0"
 
-    //for AppCompat use:
-    implementation 'com.devlomi.record-view:record-view:2.0.1'
-
-
-    //for AndroidX use:
-    implementation 'com.github.3llomi:RecordView:3.1.1'
 }

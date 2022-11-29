@@ -29,7 +29,7 @@ public class MessageActivity extends AppCompatActivity {
         recyclerView = findViewById(R.id.recyclerChat);
         textInput = findViewById(R.id.textChat);
         textChattingWith = findViewById(R.id.chattingPerson);
-        button_mic = findViewById(R.id.buttonRecord);
+        //button_mic = findViewById(R.id.buttonRecord);
         button_send = findViewById(R.id.imageView);
         messages = new ArrayList<>();
         usernameOfRoomy = getIntent().getStringExtra("usernames_of_room");
