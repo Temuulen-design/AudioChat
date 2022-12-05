@@ -49,8 +49,6 @@
         android:visibility="gone"
         />
 
-
-
     <EditText
         android:id="@+id/textChat"
         android:layout_width="298dp"
@@ -73,5 +71,18 @@
         app:layout_constraintStart_toEndOf="@+id/textChat"
         app:layout_editor_absoluteX="355dp"
         app:layout_editor_absoluteY="562dp" />
+
+    <Button
+        android:id="@+id/buttonRecord"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginBottom="16dp"
+        android:backgroundTint="@color/purple_200"
+        app:layout_constraintBottom_toTopOf="@+id/imageView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.385"
+        app:layout_constraintStart_toEndOf="@+id/textChat"
+        tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
