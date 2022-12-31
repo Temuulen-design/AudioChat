@@ -1,132 +1,113 @@
 package com.example.audiochat;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.Dialog;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.graphics.Bitmap;
 import android.media.MediaRecorder;
+import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
-import android.renderscript.ScriptGroup;
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.MotionEvent;
+import android.provider.ContactsContract;
+import android.sax.StartElementListener;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.StorageReference;
 
-import java.io.IOException;
+import java.net.URI;
 import java.util.ArrayList;
 
 public class MessageActivity extends AppCompatActivity {
-    private RecyclerView recyclerView;
+    private RecyclerView recyclerView ;
     private EditText textInput;
     private TextView textChattingWith;
-    private Button button_mic;
-    private ImageView button_send;
-    private ArrayList<Message> messages;
-    String usernameOfRoomy , chatRoomID;
-
-    private MediaRecorder mRecorder;
-    private Button buttonRecord;
-    private String mFileName = null;
+    private ImageView button_send , chat;
+    String usernameOfRoomy, chatRoomID;
+    private Button buttonImage;
     private static final String LOG_TAG = "Record_log";
 
-    @Override
+    private StorageReference imageStorage;
+    private static final int GALLERY_PICK = 1;
+    private MessageAdapter messageAdapter;
+    private ArrayList<Message> messages;
+
+
+    private String string = null;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.activity_message);
+
+
+        chat = findViewById(R.id.chat);
         recyclerView = findViewById(R.id.recyclerChat);
         textInput = findViewById(R.id.textChat);
-        textChattingWith = findViewById(R.id.chattingPerson);
         button_send = findViewById(R.id.imageView);
-        buttonRecord = findViewById(R.id.buttonRecord);
-        messages = new ArrayList<>();
+        buttonImage = (Button) findViewById(R.id.buttonImage);
+        messageAdapter = new MessageAdapter(messages,getIntent().getStringExtra("messages"), MessageActivity.this);
+        textChattingWith = findViewById(R.id.chattingPerson);
         usernameOfRoomy = getIntent().getStringExtra("usernames_of_room");
-        mFileName = Environment.getExternalStorageDirectory().getAbsolutePath();
-        mFileName += "/recorded_audio.3gp";
         textChattingWith.setText(usernameOfRoomy);
-        setUpChat();
-        buttonRecord.setOnTouchListener(new View.OnTouchListener() {
+        messages = new ArrayList<>();
+
+        chat.setOnClickListener(new View.OnClickListener() {
             @Override
-            public boolean onTouch(View view, MotionEvent motionEvent) {
-                if(motionEvent.getAction() == MotionEvent.ACTION_DOWN){
-                    startRecording();
-                }else if(motionEvent.getAction() == MotionEvent.ACTION_UP){
-                    stopRecording();
-                }
-                return false;
+            public void onClick(View v) {
+                AlertDialog.Builder alert = new AlertDialog.Builder(MessageActivity.this);
+                alert.setTitle("Hidden text : ");
+                alert.setMessage(string);
+                alert.setPositiveButton("I understand", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        finish();
+                    }
+                });
+                alert.show();
             }
         });
-    }
-
-    private void setUpChat(){
-        FirebaseDatabase.getInstance().getReference("Users/"+ FirebaseAuth.getInstance().getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
+        buttonImage.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                String myUsername = snapshot.getValue(User.class).getUsername();
-                if(usernameOfRoomy.compareTo(myUsername)>0){
-                    chatRoomID = myUsername + usernameOfRoomy;
-                }else if(usernameOfRoomy.compareTo(myUsername)==0){
-                    chatRoomID = myUsername + usernameOfRoomy;
-                }else{
-                    chatRoomID = usernameOfRoomy + myUsername;
-                }
-                attachMessage(chatRoomID);
-            }
+            public void onClick(View v) {
+                Intent gallery = new Intent();
+                gallery.setType("image/*");
+                gallery.setAction(Intent.ACTION_GET_CONTENT);
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
+                startActivityForResult(Intent.createChooser(gallery,"Select image"),GALLERY_PICK);
             }
         });
+
     }
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
 
-    private void attachMessage(String chatRoomID){
-        FirebaseDatabase.getInstance().getReference("Messages/"+chatRoomID).addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                messages.clear();
-                for(DataSnapshot dataSnapshot : snapshot.getChildren()){
-                    messages.add(dataSnapshot.getValue(Message.class));
-                }
-                recyclerView.scrollToPosition(messages.size()-1);
-                recyclerView.setVisibility(View.VISIBLE);
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-    }
-
-    private void startRecording(){
-        mRecorder = new MediaRecorder();
-        mRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
-        mRecorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
-        mRecorder.setOutputFile(mFileName);
-        mRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);
-        try {
-            mRecorder.prepare();
-        }catch(IOException e){
-            Log.e(LOG_TAG,"Prepare Failed");
+        string  = textInput.getText().toString();
+        textInput.setText("");
+        if(requestCode == GALLERY_PICK || resultCode == RESULT_OK){
+            Uri imageUri = data.getData();
+            imageUri.parse("AudioChat/app/src/res/drawable-v24/a.png");
+            chat.setImageURI(null);
+            chat.setImageURI(imageUri);
+            chat.setVisibility(View.VISIBLE);
         }
-        mRecorder.start();
-    }
 
-    private void stopRecording(){
-        mRecorder.stop();
-        mRecorder.release();
-        mRecorder = null;
+
     }
 }
+
+

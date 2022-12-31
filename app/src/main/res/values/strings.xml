@@ -18,4 +18,5 @@
     <string name="log_out_tetx">Log out</string>
     <string name="profile_section_text">Profile</string>
     <string name="email_text_login">Email</string>
+    <string name="buttonStop_Text">S</string>
 </resources>

@@ -51,8 +51,8 @@
 
     <EditText
         android:id="@+id/textChat"
-        android:layout_width="298dp"
-        android:layout_height="101dp"
+        android:layout_width="294dp"
+        android:layout_height="149dp"
         android:layout_marginStart="16dp"
         android:layout_marginBottom="16dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -63,26 +63,40 @@
         android:id="@+id/imageView"
         android:layout_width="40dp"
         android:layout_height="40dp"
-        android:layout_marginBottom="20dp"
+        android:layout_marginBottom="24dp"
         android:background="@drawable/send_icon"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.391"
+        app:layout_constraintHorizontal_bias="0.557"
         app:layout_constraintStart_toEndOf="@+id/textChat"
         app:layout_editor_absoluteX="355dp"
         app:layout_editor_absoluteY="562dp" />
 
     <Button
-        android:id="@+id/buttonRecord"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:layout_marginBottom="16dp"
+        android:id="@+id/buttonImage"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_marginBottom="24dp"
         android:backgroundTint="@color/purple_200"
         app:layout_constraintBottom_toTopOf="@+id/imageView"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.385"
+        app:layout_constraintHorizontal_bias="0.585"
         app:layout_constraintStart_toEndOf="@+id/textChat"
         tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck" />
+
+    <ImageView
+        android:id="@+id/chat"
+        android:maxWidth="100dp"
+        android:maxHeight="100dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="36dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout"
+        tools:srcCompat="@tools:sample/avatars"
+        android:visibility="invisible"
+        />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
